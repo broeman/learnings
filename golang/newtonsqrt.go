@@ -30,8 +30,8 @@ func fprime(x float64) float64 {
 
 func WikiSqrt(x float64) float64 {
 	x0 := float64(1)
-	tolerance := 0.00000001
-	epsilon := 0.000000000000001
+	const tolerance = 1e-7
+	const epsilon = 1e-15
 	x1 := x0
 
 	for i:=0; i < 20; i++ {
