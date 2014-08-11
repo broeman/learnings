@@ -4,8 +4,10 @@ import (
 	"fmt"
 	"github.com/broeman/testlib"
 )
-	
+
 func main() {
-	t := Testme{"the test worked"}
-	fmt.Println(t.output)
+	t := testlib.Testme{}
+	t.SetInput("The setter worked")
+	output := t.Input()
+	fmt.Println(output)
 }
