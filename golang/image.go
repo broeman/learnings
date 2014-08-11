@@ -1,3 +1,6 @@
+// Implementing the Image interface, exhercise 62 Go Tour
+// Author: Jesper Brodersen 2014
+
 package main
 
 import (
