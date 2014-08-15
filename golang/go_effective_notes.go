@@ -376,4 +376,158 @@ func init() {
 	}	
 }
 
-// Methods
+//// Methods:
+type ByteSlice []byte
+
+// by defining type in front of the function, it becomes a method of that type
+func (slice ByteSlice) Append(data []byte) []byte {
+	// ...
+	return newSlice // needs to return an updated slice
+}
+
+// using a pointer makes the transition direct
+func (p *ByteSlice) Append(date []byte) {
+	slice := *p
+	// ...
+	*p = slice
+}
+
+// redone to comply with io.Writer:
+func (p *ByteSlice) Write(date []byte) (n int, err error) {
+	slice := *p
+	// ...
+	*p = slice // using a pointer makes the transition direct
+	return len(data), nil
+}
+
+//// Interfaces:
+type Sequence []int
+
+// implementing the sort.Interface:
+func (s Sequence) Len() int {
+	return len(s)
+}
+
+func (s Sequence) Less(i, j int) bool {
+	return s[i] < s[j]
+}
+
+func (s Sequence) Swap(i, j int) {
+	s[i], s[j] = s[j], s[i]
+}
+
+// Method for printing
+func (s Sequence) String() string {
+	sort.Sort(s)	// sorted by those three rules defined above
+	str := "["
+	for i, elem := range s {
+		if i > 0 {
+			str += " "
+		}
+		str += fmt.Sprint(elem)
+	}
+	retrun str + "]"
+}
+
+// Conversions
+func (s Sequence) String() string {
+	sort.Sort(s)
+	return fmt.Sprint([]int(s))
+}
+
+// refactor all this into this idiom:
+type Sequence []int
+
+func (s Sequence) String() string {
+	sort.IntSlice(s).Sort()
+	return fmt.Spring([]int(s))
+}
+
+// interface conversions
+// this example mixes types:
+type Stringer interface {
+	String() string
+}
+
+var value interface{} // Value provided by caller
+switch str := value.(type) {
+case string:
+	return str
+case Stringer:
+	return str.String()
+}
+
+// Generality, methods
+type Handler interface {
+	ServeHTTP(ResponseWriter, *Request)
+}
+
+type Counter struct {
+	n int
+}
+
+func (ctr *Counter) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	ctr.n++
+	fmt.Fprintf(w, "counter = %d\n", ctr.n)
+}
+
+import "net/http"
+// ...
+ctr := new(Counter)
+http.Handle("/counter", ctr)
+
+// Channeling
+func Chan chan *http.Request
+
+func (ch Chan) ServeHTTP(w http.ResponseWriter, req *http.Request) {
+	ch <- req
+	fmt.Fprint(w, "notification sent")
+}
+
+// struct or interface embedding (since no subclasses is allowed)
+type Reader interface {
+	Read(p []byte) (n int, err error)
+}
+
+type Writer interface {
+	Write(p []byte) (n int, err error)
+}
+
+// ReadWriter is an interface that combines those above
+// It is an union of both, so it can do both
+type ReadWriter interface {
+	Reader
+	Writer
+}
+
+// Readwriter stores pointers to Reader and Writer
+type ReadWriter struct {
+	reader *Reader
+	writer *Writer
+}
+
+// we still need to implement those interfaces needed:
+func (rw *ReadWriter) Read(p []byte) (n int, err error) {
+	return rw.reader.Read(p)
+}
+// ...
+
+// convenient embedding:
+// Job type has now access to methods of Logger
+type Job struct {
+	Command string
+	*log.Logger
+}
+
+func NewJob(command string, logger *log.Logger) *Job {
+	return &Job{command, logger}
+}
+
+job := &Job{command, log.New(os.Stderr, "Job: ", log.Ldate)}
+job.Log("starting now")
+
+func (job *Job) Logf(format string, args ...interface{}) {
+	job.Logger.Logf("%q: %s", job.Command, fmt.Sprintf(format, args...))
+}
+
+// continued in concurrent_programming.go ...
