@@ -1,0 +1,6 @@
+C:\vs\Projects\SticksGame\SticksGame\bin\Debug\SticksGame.exe.config
+C:\vs\Projects\SticksGame\SticksGame\bin\Debug\SticksGame.exe
+C:\vs\Projects\SticksGame\SticksGame\bin\Debug\SticksGame.pdb
+C:\vs\Projects\SticksGame\SticksGame\obj\Debug\SticksGame.csprojResolveAssemblyReference.cache
+C:\vs\Projects\SticksGame\SticksGame\obj\Debug\SticksGame.exe
+C:\vs\Projects\SticksGame\SticksGame\obj\Debug\SticksGame.pdb

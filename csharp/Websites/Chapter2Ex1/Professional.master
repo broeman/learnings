@@ -1,0 +1,50 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeFile="Professional.master.cs" Inherits="Professional" %>
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title></title>
+    <link href="Styles/Site.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .auto-style1 {
+            width: 150px;
+            height: 129px;
+        }
+    </style>
+    <asp:ContentPlaceHolder id="HeadContent" runat="server">
+    </asp:ContentPlaceHolder>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div class="page">
+        <div class="header">
+            <div class="title">
+                <a href="Home.aspx"><img alt="Contoso" class="auto-style1" src="contoso-150px.gif" border="0" /></a><br /><br /><br />                
+            </div>
+            <h1><asp:Label ID="GreetingLabel" runat="server" ForeColor="Blue" Text="Welcome to Contoso!"></asp:Label></h1>
+            <p>&nbsp;</p>
+            <div class="menu">
+                <asp:Menu ID="Menu1" runat="server" Orientation="Horizontal">
+                    <Items>
+                        <asp:MenuItem Text="Products" Value="Products"></asp:MenuItem>
+                        <asp:MenuItem Text="Services" Value="Services"></asp:MenuItem>
+                        <asp:MenuItem Text="Downloads" Value="Downloads"></asp:MenuItem>
+                        <asp:MenuItem Text="About us" Value="About us" NavigateUrl="About.aspx"></asp:MenuItem>
+                    </Items>
+                </asp:Menu>
+            </div>
+        </div>
+        <div class="main">
+             <asp:ContentPlaceHolder id="MainContent" runat="server">
+            </asp:ContentPlaceHolder>
+            
+        </div>
+    </div>
+    </form>
+    <div class="footer">
+        &copy; 2014 Contoso
+    </div>
+</body>
+</html>
