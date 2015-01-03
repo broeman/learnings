@@ -10,7 +10,7 @@ class PostController extends BaseController
 			->nest('content', 'posts.list', compact('posts'));
 	}
 
-	public function showPost()
+	public function showPost(Post $post)
 	{
 		$comments = $post->comments()->where('approved', '=', 1)->get();
 		$this->layout->title = $post->title;
